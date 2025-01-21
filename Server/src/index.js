@@ -1,5 +1,5 @@
 import { connectdb } from "./db/db.js";
-import app from'./app.js'
+import app from'./app.jsg'
 
 
 connectdb()
