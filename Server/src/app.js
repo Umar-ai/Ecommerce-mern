@@ -23,7 +23,9 @@ app.use(express.json({
 
 // !user routes
 import {router as userRouter} from './routes/user.route.js'
-
 app.use('/api/v1/users',userRouter)
+// !product routes
+import {router as productRouter} from './routes/product.route.js'
+app.use('/api/v1/products',productRouter)
 
 export default app
