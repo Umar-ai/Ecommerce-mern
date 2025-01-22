@@ -14,8 +14,6 @@ app.use(cors({
     origin:process.env.CORS_ORIGIN,
     credentials:true
 }))
-
-
 app.use(urlencoded({
     limit:'15kb'
 }))
@@ -23,5 +21,9 @@ app.use(express.json({
     limit:"15kb"
 }))
 
+// !user routes
+import {router as userRouter} from './routes/user.route.js'
+
+app.use('/api/v1/users',userRouter)
 
 export default app

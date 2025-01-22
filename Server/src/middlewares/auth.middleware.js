@@ -1,6 +1,6 @@
-import { apierror } from "../utils/apierror";
-import { apiresponse } from "../utils/apiresponse";
+import { apierror } from "../utils/apierror.js";
 import jwt from 'jsonwebtoken'
+import { User } from "../models/user.model.js";
 
 const verfiyUser=async (req,res,next)=>{
     const accesstoken=req.cookies.accesstoken
