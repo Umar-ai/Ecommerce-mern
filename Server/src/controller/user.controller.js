@@ -2,45 +2,99 @@ import { User } from "../models/user.model.js";
 import { apierror } from "../utils/apierror.js";
 import { apiresponse } from "../utils/apiresponse.js";
 import { asynchandler } from "../utils/asynchandler.js";
-import { cloudinaryUpload} from "../utils/cloudinary.js";
+import { cloudinaryUpload } from "../utils/cloudinary.js";
+
+const tokenGenerator = async (id) => {
+    const user = await User.findById(id)
+    const refreshToken = await user.createRefreshtoken()
+    const AccessToken = await user.createAccesstoken()
+    if (refreshToken == " " || AccessToken == " ") {
+        throw new apierror(400, "Token generation in function failed")
+    }
+    user.refreshToken = refreshToken
+    await user.save({ validateBeforeSave: false })
+    return { refreshToken, AccessToken }
+}
 
 
-const register=asynchandler(async(req,res)=>{
-    const{username,email,password}=req.body
+const register = asynchandler(async (req, res) => {
+    const { username, email, password } = req.body
 
-    if([username,email,password].some((val)=>val==" ")){
-        throw new apierror(400,"All these fields are required")
+    if ([username, email, password].some((val) => val == " ")) {
+        throw new apierror(400, "All these fields are required")
     }
-    const checkEmail=await User.findOne({email})
-    if(checkEmail){
-        throw new apierror(400,"Email already exists")
+    const checkEmail = await User.findOne({ email })
+    if (checkEmail) {
+        throw new apierror(400, "Email already exists")
     }
-    const checkUsername=await User.findOne({username})
-    if(checkUsername){
-        throw new apierror(400,"username already exists")
+    const checkUsername = await User.findOne({ username })
+    if (checkUsername) {
+        throw new apierror(400, "username already exists")
     }
 
-    const avatarUrl=req?.file.path
-    if(!avatarUrl){
-        throw new apierror(400,"Avatar field is compulsory")
+    const avatarUrl = req?.file.path
+    if (!avatarUrl) {
+        throw new apierror(400, "Avatar field is compulsory")
     }
-    const avatarUpload=await cloudinaryUpload(avatarUrl)
-    if(!avatarUpload){
-        throw new apierror(400,"Cloudinary response not found")
+    const avatarUpload = await cloudinaryUpload(avatarUrl)
+    if (!avatarUpload) {
+        throw new apierror(400, "Cloudinary response not found")
     }
-    const user=await User.create({
+    const user = await User.create({
         username,
         email,
         password,
-        avatar:avatarUpload.url
+        avatar: avatarUpload.url
     }
     )
-    if(!user){
-        throw new apierror(400,"User creation failed")
+    if (!user) {
+        throw new apierror(400, "User creation failed")
     }
     return res
-    .json(new apiresponse(200,user,"Signup Successfully"))
+        .json(new apiresponse(200, user, "Signup Successfully"))
+
+})
+const login = asynchandler(async (req, res) => {
+    const { email, password } = req.body
+    if ([email, password].some((val) => val == "")) {
+        throw new apierror(400, "All these fields are required to login")
+    }
+    const user = await User.findOne({ email })
+    if (!user) {
+        throw new apierror(400, "No user exists from this email")
+    }
+    const passwordcheck = await user.verifyPassword(password)
+    if (!passwordcheck) {
+        throw new apierror(400, "Password incorrect")
+    }
+    const { refreshToken, AccessToken } = await tokenGenerator(user._id)
+    console.log(refreshToken)
+    return res
+        .status(200)
+        .cookie("accesstoken", AccessToken, { httpOnly: true })
+        .cookie("refreshToken", refreshToken, { httpOnly: true })
+        .json(new apiresponse(200, user, "User logged In successfully"))
+
+})
+const logout = asynchandler(async(req,res) => {
+    const user_id=req.user._id
+//    let users=await User.findOne({_id:user_id})
+const user=await User.findByIdAndUpdate(user_id,{refreshToken:undefined},{new:true})
+   if(!user){
+    throw new apierror(400,"user not found while logging out")
+   }
+//    users.refreshToken = undefined
+    // await users.save({ validateBeforeSave: false })
+        const options={
+            httpOnly:true,
+            secure:true
+        }
+    return res
+        .status(200)
+        .clearCookie("accesstoken",options)
+        .clearCookie("refreshToken",options)
+        .json(new apiresponse(200, {}, "User logout Successfully"))
 
 })
 
-export {register}
+export { register, login, logout }

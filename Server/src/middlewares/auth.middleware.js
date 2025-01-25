@@ -7,11 +7,12 @@ const verfiyUser=async (req,res,next)=>{
     if(!accesstoken){
         throw new apierror(400,"access token not found")
     }
+    // console.log(process.env.ACCESS_TOKEN_SECRET)
     const verify=jwt.verify(accesstoken,process.env.ACCESS_TOKEN_SECRET)
     if(!verify){
       throw new apierror(401,"access token verification failed")
     }
-    const user=User.findById(verify._id)
+    const user=await User.findById(verify._id)
     req.user=user
     next()
 
