@@ -28,4 +28,8 @@ app.use('/api/v1/users',userRouter)
 import {router as productRouter} from './routes/product.route.js'
 app.use('/api/v1/products',productRouter)
 
+// !design routes
+import {router as designRouter} from './routes/design.route.js'
+app.use('/api/v1/design',designRouter)
+
 export default app

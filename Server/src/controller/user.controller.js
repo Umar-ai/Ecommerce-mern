@@ -3,6 +3,7 @@ import { apierror } from "../utils/apierror.js";
 import { apiresponse } from "../utils/apiresponse.js";
 import { asynchandler } from "../utils/asynchandler.js";
 import { cloudinaryUpload } from "../utils/cloudinary.js";
+import { Design } from "../models/structure.model.js";
 
 const tokenGenerator = async (id) => {
     const user = await User.findById(id)
@@ -16,8 +17,8 @@ const tokenGenerator = async (id) => {
     return { refreshToken, AccessToken }
 }
 
-
 const register = asynchandler(async (req, res) => {
+
     const { username, email, password } = req.body
 
     if ([username, email, password].some((val) => val == " ")) {
@@ -39,6 +40,19 @@ const register = asynchandler(async (req, res) => {
     const avatarUpload = await cloudinaryUpload(avatarUrl)
     if (!avatarUpload) {
         throw new apierror(400, "Cloudinary response not found")
+    }
+    let date=new Date()
+    const month=date.getMonth()+2
+    const desginFound =await Design.findOne({month})
+    if(desginFound){
+        desginFound.Count=desginFound.Count+1
+        await desginFound.save({ validateBeforeSave: false })
+    }
+    else{
+        const design= await Design.create({
+            month,
+            Count:1
+        })
     }
     const user = await User.create({
         username,
