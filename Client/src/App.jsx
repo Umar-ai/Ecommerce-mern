@@ -8,6 +8,7 @@ import CHart from './components/Admin/Chart'
 import AdminPanel from './components/Admin/AdminPanel'
 import Productform from './components/Productform'
 import AdminPanel_product from './components/Admin_product/adminpanel_product'
+import Logout from './components/Logout'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,6 +16,7 @@ function App() {
   return (
     <>
     <Login/>
+    <Logout/>
     </>
   )
 }

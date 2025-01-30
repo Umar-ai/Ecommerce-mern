@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 
 const verfiyUser=async (req,res,next)=>{
     const accesstoken=req.cookies.accesstoken
+    console.log(req)
     if(!accesstoken){
         throw new apierror(400,"access token not found")
     }

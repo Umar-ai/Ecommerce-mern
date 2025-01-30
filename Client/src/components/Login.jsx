@@ -12,7 +12,7 @@ function Login() {
             const userCredentials = new FormData()
             userCredentials.append('email', data.email)
             userCredentials.append('username', data.username)
-            const response = await axios.post('http://localhost:8000/api/v1/users/login', data)
+            const response = await axios.post('http://localhost:8000/api/v1/users/login', data,{withCredentials:true})
             console.log(response.data.data)
             dispatch(login(response.data.data))
         } catch (error) {

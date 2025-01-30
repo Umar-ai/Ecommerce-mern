@@ -98,11 +98,9 @@ const logout = asynchandler(async (req, res) => {
     if (!user) {
         throw new apierror(400, "user not found while logging out")
     }
-    //    users.refreshToken = undefined
-    // await users.save({ validateBeforeSave: false })
+   
     const options = {
         httpOnly: true,
-        secure: true
     }
     return res
         .status(200)
