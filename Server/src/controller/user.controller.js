@@ -32,7 +32,6 @@ const register = asynchandler(async (req, res) => {
     if (checkUsername) {
         throw new apierror(400, "username already exists")
     }
-
     const avatarUrl = req?.file.path
     if (!avatarUrl) {
         throw new apierror(400, "Avatar field is compulsory")
@@ -41,18 +40,18 @@ const register = asynchandler(async (req, res) => {
     if (!avatarUpload) {
         throw new apierror(400, "Cloudinary response not found")
     }
-    
-    let date=new Date()
-    const month=date.getMonth()
-    const desginFound =await Design.findOne({month})
-    if(desginFound){
-        desginFound.Count=desginFound.Count+1
+
+    let date = new Date()
+    const month = date.getMonth()
+    const desginFound = await Design.findOne({ month })
+    if (desginFound) {
+        desginFound.Count = desginFound.Count + 1
         await desginFound.save({ validateBeforeSave: false })
     }
-    else{
-        const design= await Design.create({
+    else {
+        const design = await Design.create({
             month,
-            Count:1
+            Count: 1
         })
     }
     const user = await User.create({
@@ -62,6 +61,7 @@ const register = asynchandler(async (req, res) => {
         avatar: avatarUpload.url
     }
     )
+    console.log(user)
     if (!user) {
         throw new apierror(400, "User creation failed")
     }
@@ -91,23 +91,23 @@ const login = asynchandler(async (req, res) => {
         .json(new apiresponse(200, user, "User logged In successfully"))
 
 })
-const logout = asynchandler(async(req,res) => {
-    const user_id=req.user._id
-//    let users=await User.findOne({_id:user_id})
-const user=await User.findByIdAndUpdate(user_id,{refreshToken:undefined},{new:true})
-   if(!user){
-    throw new apierror(400,"user not found while logging out")
-   }
-//    users.refreshToken = undefined
+const logout = asynchandler(async (req, res) => {
+    const user_id = req.user._id
+    //    let users=await User.findOne({_id:user_id})
+    const user = await User.findByIdAndUpdate(user_id, { refreshToken: undefined }, { new: true })
+    if (!user) {
+        throw new apierror(400, "user not found while logging out")
+    }
+    //    users.refreshToken = undefined
     // await users.save({ validateBeforeSave: false })
-        const options={
-            httpOnly:true,
-            secure:true
-        }
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
     return res
         .status(200)
-        .clearCookie("accesstoken",options)
-        .clearCookie("refreshToken",options)
+        .clearCookie("accesstoken", options)
+        .clearCookie("refreshToken", options)
         .json(new apiresponse(200, {}, "User logout Successfully"))
 
 })
