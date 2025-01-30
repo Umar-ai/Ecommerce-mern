@@ -41,8 +41,9 @@ const register = asynchandler(async (req, res) => {
     if (!avatarUpload) {
         throw new apierror(400, "Cloudinary response not found")
     }
+    
     let date=new Date()
-    const month=date.getMonth()+2
+    const month=date.getMonth()
     const desginFound =await Design.findOne({month})
     if(desginFound){
         desginFound.Count=desginFound.Count+1

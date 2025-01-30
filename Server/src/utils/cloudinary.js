@@ -19,7 +19,7 @@ try {
 
 
 } catch (error) {
-  console.log("something went wrong while upload images in cloudinary")  
+  console.log("something went wrong while upload images in cloudinary",error)  
   fs.unlinkSync(image)
 }
 
