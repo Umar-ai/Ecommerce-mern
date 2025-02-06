@@ -4,7 +4,9 @@ import { productCreation, productDelete } from '../controller/product.controller
 
 
 const router=Router()
-router.route('/create').post(upload.array('images',3),productCreation)
+router.route('/create').post(upload.fields([
+    {name:'one',maxCount:1},{name:'two',maxCount:1},{name:'three',maxCount:1}
+]),productCreation)
 router.route('/delete/:id').delete(productDelete)
 
 

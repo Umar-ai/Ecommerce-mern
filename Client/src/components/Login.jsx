@@ -12,8 +12,9 @@ function Login() {
             const userCredentials = new FormData()
             userCredentials.append('email', data.email)
             userCredentials.append('username', data.username)
+            console.log(userCredentials)
             const response = await axios.post('http://localhost:8000/api/v1/users/login', data,{withCredentials:true})
-            console.log(response.data.data)
+            // console.log(response.data.data)
             dispatch(login(response.data.data))
         } catch (error) {
             console.log("somethign went wrong while logging up in the frontend login handler",error)

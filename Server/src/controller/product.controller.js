@@ -7,6 +7,8 @@ import { ProductChart } from "../models/productChart.js";
 
 const productCreation = asynchandler(async (req, res) => {
     const { name, description, category, price, stock, brand, color } = req.body
+    console.log(req.body)
+
     if ([name, description, category, price, stock, brand, color].some((val) => val == " ")) {
         throw new apierror(400, "All these are required while creating a product")
     }
@@ -14,13 +16,15 @@ const productCreation = asynchandler(async (req, res) => {
     if (checkName) {
         throw new apierror(400, "Product from the same name already exists")
     }
-    const imagesArray = req.files.map((img) => {
-        return img.path
-    })
-    console.log(imagesArray)
-    const uploadone = await cloudinaryUpload(imagesArray[0])
-    const uploadtwo = await cloudinaryUpload(imagesArray[1])
-    const uploadthree = await cloudinaryUpload(imagesArray[2])
+    const one=req.files.one[0].path
+    const two=req.files.two[0].path
+    const three=req.files.three[0].path
+ 
+    
+    const uploadone = await cloudinaryUpload(one)
+    const uploadtwo = await cloudinaryUpload(two)
+    const uploadthree = await cloudinaryUpload(three)
+
 
        let date=new Date()
         const month=date.getMonth()
@@ -48,6 +52,7 @@ const productCreation = asynchandler(async (req, res) => {
     if (!product) {
         throw new apierror(400, "product not created")
     }
+    console.log("product success")
     return res
         .status(200)
         .json(new apiresponse(200, product, "Product created successfully"))
