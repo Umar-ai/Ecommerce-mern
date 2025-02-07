@@ -80,4 +80,17 @@ const productDelete=asynchandler(async(req,res)=>{
         .json(new apiresponse(200,"Product deleted successfully"))
     
 })
-export { productCreation,productDelete }
+
+const productFind=asynchandler(async(req,res)=>{
+
+const products=await Product.find()
+if(!products){
+    throw new apierror(500,"Products not found")
+}
+return res
+.status(200)
+.json(new apiresponse(200,products,"Products founded successfully"))
+
+
+})
+export { productCreation,productDelete,productFind }

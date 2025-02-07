@@ -100,17 +100,17 @@ function Productform() {
                         <div className="pt-6 flex  md:pt-3 2xl:pt-6">
                             <select className='rounded-md 2xl:h-10 md:h-9 px-5 py-2 md:text-lg text-xl font-bold' {...register('color', { required: true })} >
                                 <option value="">Color</option>
-                                <option value="Red">Red</option>
+                                <option value="Orange">Orange</option>
                                 <option value="Blue">Blue</option>
-                                <option value="Yellow">Yelloe</option>
-                                <option value="White">White</option>
+                                <option value="Yellow">Yellow</option>
+                                <option value="Green">Green</option>
                                 <option value="Black">Black</option>
                             </select>
                         </div>
                     </div>
 
 
-                    <div className='pt-6 md:pt-2 2xl:pt-6'>
+                    <div className='pt-6 md:pt-2 2xl:pt-2'>
 
                         <input
                             {...register(`imageone`, { required: true })}
@@ -120,7 +120,7 @@ function Productform() {
 
 
                     </div>
-                    <div className='pt-6 md:pt-1 2xl:pt-6'>
+                    <div className='pt-6 md:pt-1 2xl:pt-2'>
 
                         <input
                             {...register(`imagetwo`, { required: true })}
@@ -130,7 +130,7 @@ function Productform() {
 
 
                     </div>
-                    <div className='pt-6 md:pt-1 2xl:pt-6'>
+                    <div className='pt-6 md:pt-1 2xl:pt-2'>
 
                         <input
                             {...register(`imagethree`, { required: true })}
