@@ -82,8 +82,20 @@ const productDelete=asynchandler(async(req,res)=>{
 })
 
 const productFind=asynchandler(async(req,res)=>{
+    const {name,brand}=req.query
+    const queryObj={}
+    if(name){
+        queryObj.name={$regex:name,$options:"i"}
+    }
+    // if(name){
+    //     queryObj.name=name
+    // }
+    
+    // console.log(queryObj)    
+    console.log(queryObj)
 
-const products=await Product.find()
+const products=await Product.find(queryObj)
+
 if(!products){
     throw new apierror(500,"Products not found")
 }

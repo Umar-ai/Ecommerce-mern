@@ -14,7 +14,7 @@ function Allproducts() {
         all_product()
     },[])
   return (
-    <div className='grid  bg-[#FAF0E6] grid-cols-2' >
+    <div className='grid  bg-[#FAF0E6]  md:grid-cols-4 grid-cols-2' >
       {allproduct.map((product)=>(
 
         <div className='h-[26rem]  bg-Primary mt-4 w-[15rem] rounded-md ml-5' key={product._id}>

@@ -10,13 +10,14 @@ import Productform from './components/Productform'
 import AdminPanel_product from './components/Admin_product/adminpanel_product'
 import Logout from './components/Logout'
 import Allproducts from './components/Allproducts'
+import Search from './components/Search'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-   <Allproducts/>
+   <Search/>
     </>
   )
 }
