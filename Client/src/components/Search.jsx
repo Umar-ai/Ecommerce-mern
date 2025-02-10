@@ -10,6 +10,7 @@ function Search() {
 
     const fetch = async (value) => {
         try {
+            setresult([])
             const response = await axios.post(`http://localhost:8000/api/v1/products/allproducts?name=${value}`)
             console.log(response)
             setresult(response.data.data)
@@ -37,24 +38,24 @@ function Search() {
                     value={search}
                     onChange={(e) => setsearch(e.target.value)}
                 />
-                <label className='mt-2 text-2xl text-accent font-bold' htmlFor=""><FaSearch/></label>
+                <label className='mt-2 text-2xl text-accent font-bold' htmlFor=""><FaSearch /></label>
             </div>
             <div>
-                {search&&(
-                    <div className='w-[35vw]'>
-                        {result.slice(0, 5).map((val)=>(
-                            <div className=' flex  gap-36 pt-3 bg-[#FAFAFA]' key={val._id}>
+                {search && (
+                    <div className='w-[60vw] md:w-[35vw] 2xl:w-[20vw]'>
+                        {result.slice(0, 5).map((val) => (
+                            <div className=' flex   pt-3 bg-[#FAFAFA]' key={val._id}>
 
-                                <div className='flex gap-2'>
-                                <img className='w-10 h-10' src={val.images[0]} alt="" />
+                                <div className='flex gap-2 flex-grow'>
+                                    <img className='w-10 h-10' src={val.images[0]} alt="" />
 
-                                <div className='flex-col'>
-                                <p>{val.name}</p>
-                                <p className='font-semibold'>{val.price}<sup className='font-extrabold'>$</sup></p>
+                                    <div className='flex-col'>
+                                        <p>{val.name}</p>
+                                        <p className='font-semibold'>{val.price}<sup className='font-extrabold'>$</sup></p>
 
+                                    </div>
                                 </div>
-                                </div>
-                                <div className={val.stock>5?'text-green-500':'text-red-500'} >{val.stock>5?"In Stock":"Low Stock"}</div>
+                                <div className={`${val.stock > 5 ? 'text-green-500' : 'text-red-500'} mr-5 2xl:mr-5  `} >{val.stock > 5 ? "In Stock" : "Low Stock"}</div>
 
 
                             </div>

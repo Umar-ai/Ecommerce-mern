@@ -95,6 +95,9 @@ function Productform() {
                                 <option value="samsung">samsung</option>
                                 <option value="apple">apple</option>
                                 <option value="realme">realme</option>
+                                <option value="oppo">oppo</option>
+                                <option value="xiaomi">xiaomi</option>
+                                <option value="vivo">vivo</option>
                             </select>
                         </div>
                         <div className="pt-6 flex  md:pt-3 2xl:pt-6">
