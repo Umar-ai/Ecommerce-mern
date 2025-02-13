@@ -29,7 +29,10 @@ const userSchema = new Schema({
     },
     cart: [
         {
-            productId: String,
+            productId:{
+                type:Schema.Types.ObjectId,
+                ref:"Product"
+              },
             quantity: Number
         },
     ],

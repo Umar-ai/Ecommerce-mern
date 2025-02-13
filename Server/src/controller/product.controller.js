@@ -87,17 +87,15 @@ const productFind=asynchandler(async(req,res)=>{
     if(name){
         queryObj.name={$regex:name,$options:"i"}
     }
-    // if(name){
-    //     queryObj.name=name
-    // }
-    
-    // console.log(queryObj)    
-    console.log(queryObj)
+     
 
 const products=await Product.find(queryObj)
 
 if(!products){
     throw new apierror(500,"Products not found")
+}
+if(products.length<1){
+    return 
 }
 return res
 .status(200)
@@ -105,4 +103,12 @@ return res
 
 
 })
-export { productCreation,productDelete,productFind }
+const getPrdouct=asynchandler(async(req,res)=>{
+    const {id}=req.params
+    const response=await Product.findOne({_id:id})
+    return res
+    .status(200)
+    .json(new apiresponse(200,response,"Product details found"))
+
+})
+export {getPrdouct,productCreation,productDelete,productFind }

@@ -37,6 +37,9 @@ app.use('/api/v1/design',designRouter)
 import {router as product_chartRouter} from './routes/productChart.route.js'
 app.use('/api/v1/productchart',product_chartRouter)
 
+// !Cart
+import {router as cartRouter} from './routes/cart.router.js'
+app.use('/api/v1/cart',cartRouter)
 
 
 export default app

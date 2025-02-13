@@ -83,7 +83,6 @@ const login = asynchandler(async (req, res) => {
         throw new apierror(400, "Password incorrect")
     }
     const { refreshToken, AccessToken } = await tokenGenerator(user._id)
-    console.log(refreshToken)
     return res
         .status(200)
         .cookie("accesstoken", AccessToken, { httpOnly: true })
@@ -109,5 +108,17 @@ const logout = asynchandler(async (req, res) => {
         .json(new apiresponse(200, {}, "User logout Successfully"))
 
 })
+const userCart=asynchandler(async(req,res)=>{
+    const user=await User.findOne({_id:req.user._id}).populate({
+        path:'cart.productId',
+        // model:'Product'
+    })
+    if(!user){
+        throw new apierror(500,"having error while getting the cart data")
+    }
+    return res
+    .status(200)
+    .json(new apiresponse(200,user,"user data in the cart founded successfully"))
+})
 
-export { register, login, logout }
+export { register, login, logout,userCart }

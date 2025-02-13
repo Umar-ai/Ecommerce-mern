@@ -3,9 +3,11 @@ import { useForm } from 'react-hook-form'
 import {login} from '../ReduxToolkit/authSlice'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
     const { handleSubmit, register } = useForm()
+    const navigate=useNavigate()
     const dispatch = useDispatch()
     const loginHandler = async (data) => {
         try {
@@ -16,6 +18,7 @@ function Login() {
             const response = await axios.post('http://localhost:8000/api/v1/users/login', data,{withCredentials:true})
             // console.log(response.data.data)
             dispatch(login(response.data.data))
+            navigate('/')
         } catch (error) {
             console.log("somethign went wrong while logging up in the frontend login handler",error)
         }

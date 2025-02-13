@@ -1,25 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Signup from './components/Signup'
-import Login from './components/Login'
-import CHart from './components/Admin/Chart'
-import AdminPanel from './components/Admin/AdminPanel'
-import Productform from './components/Productform'
-import AdminPanel_product from './components/Admin_product/adminpanel_product'
-import Logout from './components/Logout'
-import Allproducts from './components/Allproducts'
-import Search from './components/Search'
-import Filter from './components/Filter'
-import Producwithfilter from './Pages/Producwithfilter'
-
+import Header from './components/Header'
+import Footer from './components/Footer'
+import {Outlet} from 'react-router-dom'
+import Products_details from './components/Products_details'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-    <Producwithfilter/>
+   <Header/>
+   <Outlet/>
+   <Footer/>
+   {/* <Products_details/> */}
     </>
   )
 }
