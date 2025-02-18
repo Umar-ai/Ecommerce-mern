@@ -16,7 +16,10 @@ function Products_details() {
         setdetails(response.data.data)
         setimages(response.data.data.images)
         setmainimages(response.data.data.images[0])
-        setloading(false)
+        setTimeout(() => {
+          setloading(false)
+          
+        }, 500);
 
         
       } catch (error) {
@@ -43,16 +46,16 @@ if(loading){
   return (
     <div className='flex ml-10 justify-center overflow-x-hidden flex-col items-start gap-10'>
       <div className='md:flex gap-10'>
-        <div className='flex md:flex-col'>
+        <div className='flex 2xl:flex-row md:flex-col'>
 
-          <div className='ml-10 rounded-md  md:h-[80vh] mt-2 md:border-2 '>
+          <div className='ml-10 rounded-md flex flex-grow 2xl:h-[70vh] md:h-[80vh] mt-2 md:border-2 '>
             <img className='h-[45vh] md:h-[65vh]' src={mainimage} alt="" />
           </div>
 
-          <div className='flex flex-col md:flex-row gap-4 md:gap-10 mt-2'>
-            <img className='md:h-[12vh] md:ml-9 h-[10vh] border-2 border-black border-opacity-[0.2]' onClick={() => changeMain_image(image1)} src={image1} alt="" />
-            <img className='md:h-[12vh] h-[10vh] border-2 border-black border-opacity-[0.2]'         onClick={() => changeMain_image(image2)} src={image2} alt="" />
-            <img className='md:h-[12vh] h-[10vh] border-2 border-black border-opacity-[0.2]'         onClick={() => changeMain_image(image3)} src={image3} alt="" />
+          <div className='flex flex-col 2xl:flex-col md:flex-row gap-4 md:gap-10 mt-2'>
+            <img className='md:h-[12vh] md:ml-9 2xl:h-[8vh] 2xl:w-[4vw] h-[10vh] border-1 border-black border-opacity-[0.2]' onClick={() => changeMain_image(image1)} src={image1} alt="" />
+            <img className='md:h-[12vh] 2xl:ml-9 2xl:h-[8vh] 2xl:w-[4vw]  h-[10vh] border-1 border-black border-opacity-[0.2]'         onClick={() => changeMain_image(image2)} src={image2} alt="" />
+            <img className='md:h-[12vh] 2xl:ml-9 2xl:h-[8vh] 2xl:w-[4vw]  h-[10vh] border-1 border-black border-opacity-[0.2]'         onClick={() => changeMain_image(image3)} src={image3} alt="" />
           </div>
         </div>
         <div className='flex flex-col mt-4 gap-8'>
@@ -72,13 +75,14 @@ if(loading){
             </div>
           </div>
           <div className='bg-yellow-100 rounded-md flex flex-col items-start p-4 h-24 w-[25rem]'>
-            <p className='font-semibold'>Add Gift Wrap</p>
+            <p className='font-semibold'>☐ Add Gift Wrap</p>
 
             <p>Cost:<span className='font-semibold'>Rs 26,399</span></p>
             <p className='font-semibold'>Make it memorable- Add Gift Wrapping</p>
           </div>
           <div className='bg-green-100 rounded-md flex flex-col items-start p-4 h-24 w-[25rem]'>
-            <p className='font-semibold'>2 Year Warranty</p>
+            <p className='font-semibold'>☐ 
+              2 Year Warranty</p>
             <p>Cost:<span className='font-semibold'>Rs 999</span></p>
             <p className='font-semibold'>1 Year Brand(free)+ 1 year North-store...</p>
           </div>

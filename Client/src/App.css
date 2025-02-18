@@ -1,41 +1,6 @@
-/* Hide the default radio button */
-.hidden {
-    display: none;
-}
-
-/* Style the custom checkbox */
-.custom-radio {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    cursor: pointer;
-}
-
-.custom-checkbox {
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border: 2px solid #ccc;
-    margin-right: 8px;
-    display: inline-block;
-    position: relative;
-    border-radius: 4px; /* for checkbox look */
-}
-
-/* Style for the checked state */
-.custom-radio input:checked + .custom-checkbox {
-    background-color: black;
-    border-color: black;
-}
-
-/* Optional: Add a tick mark for the checked state */
-.custom-radio input:checked + .custom-checkbox::after {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 12px;
-    height: 12px;
-    background-color: white;
-    border-radius: 2px; /* for checkbox look */
+.custom-hr {
+    border: 1px solid #000; /* Adjust the border color and thickness as needed */
+    margin-top: 20px;
+    background-color: #000;
+    margin-bottom: 20px;
 }

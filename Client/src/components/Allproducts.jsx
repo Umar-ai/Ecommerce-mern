@@ -6,10 +6,12 @@ import { useDispatch } from 'react-redux';
 import { ProductMang, resetPurpose, Addto_Cart } from '../ReduxToolkit/productreducer';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
 function Allproducts() {
 
   const dispatch = useDispatch()
   const prodcutsData = useSelector((state) => state.product?.productsData)
+  const[loader,setloader]=useState(false)
   const [showmessage, setshowmessage] = useState(false)
   const navigate = useNavigate()
 
@@ -34,10 +36,12 @@ function Allproducts() {
 
   useEffect(() => {
     const all_product = async () => {
+      setloader(true)
       const response = await axios.post('http://localhost:8000/api/v1/products/allproducts')
       if (response) {
         dispatch(ProductMang(response.data.data))
         dispatch(resetPurpose(response.data.data))
+        setloader(false)
       }
       else {
         alert("Something went wrong while fetching data from the all products api")
@@ -46,6 +50,15 @@ function Allproducts() {
     }
     all_product()
   }, [])
+  if(loader){
+    return(
+
+     <div className="flex  justify-center items-center relative left-[350%] min-h-screen">
+         <ClipLoader color="#2d3142" loading={loader} size={100} />
+          </div>
+      )
+    
+  }
   return (
     <>
       <div>

@@ -16,7 +16,8 @@ export default {
       },
        colors: {
        'Primary': '#FBFEF9', 
-       'secondary': '#191923',
+      //  'secondary': '#191923',
+       'secondary': '#4F6D7A',
        'accent': '#0E79B2',
        'hover': '#094D71',
       },
