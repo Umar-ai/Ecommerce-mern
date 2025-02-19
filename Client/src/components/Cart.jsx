@@ -3,18 +3,67 @@ import { FaTrash } from 'react-icons/fa';
 import axios from 'axios'
 import { ClipLoader } from 'react-spinners'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 import '../App.css'
 
 
 
 function Cart() {
+    const navigate = useNavigate()
+    const userData = useSelector((state) => state.auth.userData)
+
+
+
     const [cartitem, setcartitems] = useState([])
-    const [showMessage, setshowMessage] = useState(false)
     const [loading, setloading] = useState(true)
     const [update, setupdate] = useState(0)
     const [total_price, settotal_price] = useState(0)
     const [total_quantity, settotal_quantity] = useState(0)
-    const data = total_price==0?false:true
+    const[address,setaddress]=useState(false)
+    const data = total_price == 0 ? false : true
+
+    useEffect(() => {
+        const getCartitem = async () => {
+            try {
+                if (userData?.address !== " ") 
+                    {
+                        console.log("user has address")
+                        setaddress(true)
+                    console.log("user address",address)
+                }
+                const response = await axios.post('http://localhost:8000/api/v1/users/userCart', {}, { withCredentials: true })
+                if (response) {
+                    setcartitems(response.data.data.cart)
+                    let price = []
+                    let quantity = []
+                    response.data.data.cart.map((item) => price?.push(item.productId.price * item.quantity))
+                    response.data.data.cart.map((item) => quantity?.push(item.quantity))
+
+                    settotal_quantity(quantity.reduce((acc, curr) => acc + curr, 0))
+                    settotal_price(price.reduce((acc, curr) => acc + curr, 0))
+                }
+                setloading(false)
+            } catch (error) {
+                console.log("Something went wrong while getting the products data", error)
+            }
+        }
+        getCartitem()
+        
+    }, [update])
+
+
+
+    const handle_Order = () => {
+        console.log("logging in the order function ",address)
+        if (address) {
+            
+            alert("in order section")
+            // navigate('/order_page')
+        }
+        else {
+            navigate('/address_form')
+        }
+    }
     const decreaseit = async (id) => {
         try {
             setloading(true)
@@ -55,28 +104,6 @@ function Cart() {
 
 
 
-    useEffect(() => {
-        const getCartitem = async () => {
-            try {
-                const response = await axios.post('http://localhost:8000/api/v1/users/userCart', {}, { withCredentials: true })
-                if (response) {
-                    setcartitems(response.data.data.cart)
-                    let price = []
-                    let quantity=[]
-                    response.data.data.cart.map((item) => price?.push(item.productId.price * item.quantity))
-                    response.data.data.cart.map((item) => quantity?.push(item.quantity))
-                    
-                    settotal_quantity( quantity.reduce((acc, curr) => acc + curr, 0))
-                    settotal_price(price.reduce((acc, curr) => acc + curr, 0))
-                }
-                setloading(false)
-            } catch (error) {
-                console.log("Something went wrong while getting the products data", error)
-            }
-        }
-        getCartitem()
-
-    }, [update])
 
 
 
@@ -87,6 +114,7 @@ function Cart() {
             </div>
         )
     }
+
 
 
     return (
@@ -108,7 +136,7 @@ function Cart() {
                                         <div className='md:mr-4 md:mt-5  '>
 
                                             <div className='flex gap-2 '>
-                                                <p className='font-bold md:text-3xl text-black  text-2xl'>{val.productId.price * val.quantity}</p>
+                                                <p className='font-bold md:text-3xl text-black  text-2xl'>{val.productId.price * val.quantity}<sup>$</sup></p>
                                                 <p className='bg-accent md:text-lg text-Primary rounded-md py-1 px-2'>-10%</p>
                                             </div>
                                             <div >
@@ -129,7 +157,7 @@ function Cart() {
                                 </div>
                                 <div className='flex mt-2 text-xl gap-[20rem]'>
                                     <p className='font-bold '>Sub-Total</p>
-                                    <p className='font-semibold '>{total_price}</p>
+                                    <p className='font-semibold '>{total_price}<sup>$</sup></p>
                                 </div>
                                 <div className='flex text-xl  mt-5 gap-[16rem]'>
                                     <p className='font-bold ' >Number of Products</p>
@@ -141,10 +169,10 @@ function Cart() {
 
                                 <div className='flex text-xl mt-5 gap-[20rem]'>
                                     <p className='font-bold ' >Total</p>
-                                    <p className='font-semibold'> {total_price}</p>
+                                    <p className='font-semibold'>{total_price}<sup>$</sup></p>
                                 </div>
                                 <div>
-                                    <button className='py-1 mt-5 px-4 bg-black text-Primary ml-[20rem]'>Proceed to checkout</button>
+                                    <button onClick={handle_Order} className='py-1 mt-5 px-4 bg-black text-Primary ml-[20rem]'>Proceed to checkout</button>
                                 </div >
 
                             </div>

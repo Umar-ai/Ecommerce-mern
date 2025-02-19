@@ -12,6 +12,8 @@ const Details=lazy(()=>import('./Pages/ProductDetails.jsx'))
 const Login_Page=lazy(()=>import('./Pages/LoginPage.jsx'))
 const Cart_page=lazy(()=>import('./Pages/Cart_page.jsx'))
 const Signup_page=lazy(()=>import('./components/Signup.jsx'))
+const Address_form=lazy(()=>import('./Pages/Adressform_page.jsx'))
+const Order_page=lazy(()=>import('./Pages/Order_page.jsx'))
 
 
 const router = createBrowserRouter([
@@ -22,7 +24,7 @@ const router = createBrowserRouter([
       {
         element: (
          <LazyLoadWrapper>
-            <Home/>
+             <Home/> 
          </LazyLoadWrapper>
           
         ),
@@ -59,7 +61,23 @@ const router = createBrowserRouter([
           </LazyLoadWrapper>
         ),
         path:'/detail/:id'
-      }
+      },
+      {
+        element:(
+          <LazyLoadWrapper>
+            <Address_form/>
+          </LazyLoadWrapper>
+        ),
+        path:'/address_form'
+      },
+      {
+        element:(
+          <LazyLoadWrapper>
+            <Order_page/>
+          </LazyLoadWrapper>
+        ),
+        path:'/order_page'
+      },
 
     ]
 

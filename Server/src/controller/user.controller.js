@@ -120,5 +120,26 @@ const userCart=asynchandler(async(req,res)=>{
     .status(200)
     .json(new apiresponse(200,user,"user data in the cart founded successfully"))
 })
+const add_Useradress=asynchandler(async(req,res)=>{
+const {city,province,postal_code,one_liner}=req.body
+if([city,province,postal_code,one_liner].some((val)=>val=="")){
+    throw new apierror(205,"All these fields are required")
+}
+const user=await User.findOne({_id:req.user._id})
+if(!user){
+    throw new apierror(205,"user not found")
+}
+user.address.city=city
+user.address.province=province
+user.address.postal_code=postal_code
+user.address.one_liner=one_liner
+await user.save({validateBeforeSave:false})
+return res
+.status(200)
+.json(new apiresponse(200,user,"User address added successfully"))
 
-export { register, login, logout,userCart }
+
+})
+
+
+export { register, login, logout,userCart,add_Useradress }
