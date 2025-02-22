@@ -26,6 +26,14 @@ const productSchema = new Schema({
         type: String,
         default: "local"
     },
+    ram: {
+        type: Number,
+        required:true
+    },
+    storage: {
+        type: Number,
+        required:true
+    },
     color: {
         type:String,
         required:true
@@ -39,7 +47,10 @@ const productSchema = new Schema({
     },
     reviews: [
         {
-            userId: String,
+            userId: {
+                type: Schema.Types.ObjectId,
+                ref: "User"
+            },
             rating: Number,
             comment: String,
             date: Date

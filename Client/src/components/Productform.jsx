@@ -15,6 +15,8 @@ function Productform() {
         productdetails.append('stock', data.stock)
         productdetails.append('brand', data.brand)
         productdetails.append('color', data.color)
+        productdetails.append('ram', data.ram)
+        productdetails.append('storage', data.storage)
         productdetails.append('one', data.imageone[0])
         productdetails.append('two',  data.imagetwo[0])
         productdetails.append('three',  data.imagethree[0])
@@ -108,6 +110,29 @@ function Productform() {
                                 <option value="Yellow">Yellow</option>
                                 <option value="Green">Green</option>
                                 <option value="Black">Black</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className='flex gap-8 '>
+                        <div className="pt-6  flex  md:pt-3 2xl:pt-6">
+                            <select className=' 2xl:h-10 rounded-md md:text-lg px-5 py-2 md:h-9 text-xl font-bold'  {...register('ram', { required: true })} >
+                                <option value="">Ram</option>
+                                <option value="2">2GB</option>
+                                <option value="4">4GB</option>
+                                <option value="6">6GB</option>
+                                <option value="8">8GB</option>
+                                <option value="12">12GB</option>
+                               
+                            </select>
+                        </div>
+                        <div className="pt-6 flex  md:pt-3 2xl:pt-6">
+                            <select className='rounded-md 2xl:h-10 md:h-9 px-5 py-2 md:text-lg text-xl font-bold' {...register('storage', { required: true })} >
+                                <option value="">Storage</option>
+                                <option value="32">32GB</option>
+                                <option value="64">64GB</option>
+                                <option value="128">128GB</option>
+                                <option value="256">256GB</option>
+                                <option value="512">512GB</option>
                             </select>
                         </div>
                     </div>

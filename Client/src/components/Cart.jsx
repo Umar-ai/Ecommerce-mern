@@ -57,8 +57,7 @@ function Cart() {
         console.log("logging in the order function ",address)
         if (address) {
             
-            alert("in order section")
-            // navigate('/order_page')
+            navigate('/order_page')
         }
         else {
             navigate('/address_form')

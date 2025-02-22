@@ -60,11 +60,9 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 8)
     next()
 })
-
 userSchema.methods.verifyPassword = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
-
 userSchema.methods.createAccesstoken = function () {
     return jwt.sign({
         _id: this._id,

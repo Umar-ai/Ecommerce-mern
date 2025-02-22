@@ -2,13 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {ClipLoader} from 'react-spinners'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 function Products_details() {
   const [details,setdetails]=useState({})
   const[Images,setimages]=useState([])
   const[loading,setloading]=useState(true)
   const [mainimage, setmainimages] = useState("")
+  const[allowed,setisAllowed]=useState(false)
+  const allow_toReview=useSelector((state)=>state.auth?.userData?.reviews)
   const {id} = useParams()
+
+const check_ifAllow=()=>{
+  allow_toReview.map((val)=>{
+    if(val._id==id){
+      setisAllowed(true)
+    }
+  }
+)
+}
+
+
+
   useEffect(()=>{
     const getproduct_data=async()=>{
       try {
@@ -18,7 +33,6 @@ function Products_details() {
         setmainimages(response.data.data.images[0])
         setTimeout(() => {
           setloading(false)
-          
         }, 500);
 
         
@@ -27,6 +41,7 @@ function Products_details() {
       }
     }
     getproduct_data()
+    check_ifAllow()
   },[id])
   const image1 =Images[0]
   const image2 =Images[1]
@@ -91,6 +106,9 @@ if(loading){
             <button className=' text-accent border-2 border-accent py-2 px-5 rounded-md'>Check Out</button>
           </div>
         </div>
+      </div>
+      <div>
+        
       </div>
     </div>
   )

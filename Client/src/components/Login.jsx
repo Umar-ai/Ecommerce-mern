@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import {login} from '../ReduxToolkit/authSlice'
+import {login,checkAdmin} from '../ReduxToolkit/authSlice'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -14,10 +14,13 @@ function Login() {
             const userCredentials = new FormData()
             userCredentials.append('email', data.email)
             userCredentials.append('username', data.username)
-            console.log(userCredentials)
             const response = await axios.post('http://localhost:8000/api/v1/users/login', data,{withCredentials:true})
-            // console.log(response.data.data)
             dispatch(login(response.data.data))
+            if(response.data.data.isAdmin==true){
+                navigate('/all_order')
+                dispatch(checkAdmin())
+            }
+            console.log(response.data.data)
             navigate('/')
         } catch (error) {
             console.log("somethign went wrong while logging up in the frontend login handler",error)

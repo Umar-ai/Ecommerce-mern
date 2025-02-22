@@ -1,15 +1,16 @@
 import React from 'react'
 import { useForm, } from 'react-hook-form'
 import axios from 'axios'
-
+import { useNavigate } from 'react-router-dom'
 
 function Productform() {
     const { handleSubmit, register } = useForm()
-
+const navigate=useNavigate()
     const Addresshandler = async (data) => {
         const response=await axios.post(`http://localhost:8000/api/v1/users/add_address`,{},{withCredentials:true})
         if(response){
             alert("address added successfully")
+            navigate('/order_page')
         }
        console.log("button clicked")
        console.log(data)

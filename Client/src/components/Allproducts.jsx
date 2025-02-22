@@ -74,7 +74,10 @@ function Allproducts() {
           <div className='h-[26rem]  bg-Primary mt-4 w-[15rem] mr-9 rounded-md ml-5' key={product._id}>
             <img onClick={() => product_overView(product._id)} className=' mt-6 ml-4 w-[12rem]' src={product.images[0]} />
             <p onClick={() => product_overView(product._id)} className='mt-2 ml-4 text-xl font-semibold '>{product.name}</p>
+            <div className='flex gap-2'>
             <p onClick={() => product_overView(product._id)} className='mt-2 ml-4 text-xl font-semibold  '>☆☆☆☆☆</p>
+            <p className='bg-accent md:text-md h-7 mt-2 pt-1 text-Primary rounded-md  px-1'>-10%</p>
+            </div>
             <div className='flex justify-center mt-[2rem] items-center gap-[4rem] '>
               <div>
                 <p className='text-xl line-through font-light   ml-1 '>{product.price + 50}$</p>

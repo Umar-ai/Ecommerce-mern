@@ -1,7 +1,7 @@
 import {Router} from 'express'
 import { upload } from '../middlewares/multer.middleware.js'
-import { productCreation, productDelete, productFind,getPrdouct } from '../controller/product.controller.js'
-
+import { productCreation, productDelete, productFind,getPrdouct,productDeleteAll,addReview } from '../controller/product.controller.js'
+import {verfiyUser} from '../middlewares/auth.middleware.js'
 
 const router=Router()
 router.route('/create').post(upload.fields([
@@ -11,6 +11,8 @@ router.route('/create').post(upload.fields([
 router.route('/delete/:id').delete(productDelete)
 router.route('/allProducts').post(productFind)
 router.route('/productdetail/:id').post(getPrdouct)
+router.route('/allProductDelte').post(productDeleteAll)
+router.route('/addReview/:id').post(verfiyUser,addReview)
 
 
 
