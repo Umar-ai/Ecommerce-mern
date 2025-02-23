@@ -7,7 +7,8 @@ function All_orders() {
     const All_Orders = async () => {
       try {
         const response = await axios.post("http://localhost:8000/api/v1/order/all_orders", {}, { withCredentials: true })
-        if (response) {
+        if (response) { 
+          console.log(response.data.data)
           setall_orders(response.data.data)
         }
       } catch (error) {

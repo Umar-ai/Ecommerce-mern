@@ -10,7 +10,7 @@ function Products_details() {
   const[loading,setloading]=useState(true)
   const [mainimage, setmainimages] = useState("")
   const[allowed,setisAllowed]=useState(false)
-  const allow_toReview=useSelector((state)=>state.auth?.userData?.reviews)
+  const allow_toReview=useSelector((state)=>state.auth?.userData?.reviews)//user review array
   const {id} = useParams()
 
 const check_ifAllow=()=>{

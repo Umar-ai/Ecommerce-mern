@@ -10,7 +10,6 @@ function Header() {
   const navigate = useNavigate()
   const status = useSelector((state) => state.auth?.status)
   const isAdmin = useSelector((state) => state.auth?.isAdmin)
-  console.log(status)
   return (
     <div className='flex   justify-around items-center  2xl:h-[11vh] md:h-[12vh] bg-secondary text-Primary'>
       <div>

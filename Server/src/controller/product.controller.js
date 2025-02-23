@@ -127,6 +127,7 @@ const addReview = asynchandler(async (req, res) => {
     if ([rating, comment].some(val => val == "")) {
         throw new apierror(205, "Fields are missing to create a review")
     }
+    // const user=await User.findOne({_id:userid})
     const product = await Product.findOne({ _id: product_id })
     const review = {
         userId: userid,

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { ClipLoader } from 'react-spinners'
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 function Order() {
 
   const [orderItems, setorderItems] = useState([])
-  const [loading, setloading] = useState(false)
+  const [loading, setloading] = useState(true)
   const [total_price, settotal_price] = useState(0)
   const [total_quantity, settotal_quantity] = useState(0)
+  const [show, setshow] = useState(false)
+  const navigate=useNavigate()
   const [payment_Method, setpayment_Method] = useState("cod")
   const data = true
   useEffect(() => {
@@ -32,8 +35,11 @@ function Order() {
     getCartitem()
 
   }, [])
-  const handle_Order_Confirm = () => {
+  const handle_Order_Confirm =() => {
+    
     let order_details
+    let response
+    setloading(true)
     orderItems.map(async(val) => (
       order_details={
         payment_method:payment_Method,
@@ -41,9 +47,28 @@ function Order() {
         order_quantity:val.quantity,
         product_id:val.productId._id
       },
-      await axios.post('http://localhost:8000/api/v1/order/create_order',order_details,{withCredentials:true})
-    ))
+       await axios.post('http://localhost:8000/api/v1/order/create_order',order_details,{withCredentials:true})
+      ))
+      setshow(true)
+      setTimeout(() => {
+        setloading(false)
+        order_success()
+        console.log("order orderItems",order_details)
+      }, 1000);
     
+  }
+  async function order_success(){
+    try {
+      // alert("function called delete cart")
+      setshow(true)
+      await axios.post('http://localhost:8000/api/v1/cart/deletecart',{},{withCredentials:true})
+      setTimeout(() => {
+        setshow(false) 
+        navigate('/cart')
+      }, 700);
+    } catch (error) {
+      console.log("something went wrong in the order_success function",error)
+    }
   }
 
   if (loading) {
@@ -59,8 +84,11 @@ function Order() {
 
         <div className='w-[90vw] mx-auto '>
           <div className='flex justify-between items-center'>
-            <h1 className='text-4xl ml-2 font-bold '>Order--Summary</h1>
+            {show&&(<div className='text-3xl font-bold w-[90vw] text-Primary text-center h-[8vh] bg-green-500 mb-[8rem]'>
+                  Order Successfull
+            </div>)}
           </div>
+            <h1 className='text-4xl ml-2 font-bold '>Order--Summary</h1>
           <div>
             {orderItems?.map((val) => (
               <div className='flex gap-4 rounded-md border-2 border-b-2 border-black border-t-0 border-r-0 border-l-0  mt-2 h-[4rem]  bg-Primary' key={val._id}>

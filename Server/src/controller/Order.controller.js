@@ -7,7 +7,7 @@ import {User} from '../models/user.model.js'
 
 const create_Order=asynchandler(async(req,res)=>{
     const{order_price,product_id,order_quantity,payment_method}=req.body
-    if([order_price,product_id,order_quantity,payment_method].some((val)=>val=="")){
+    if([order_price,product_id,order_quantity,payment_method].some((val)=>val==null||"")){
         throw new apierror(205,"all these fields are required for a order")
     }
     const order=await Order.create({
@@ -20,7 +20,6 @@ const create_Order=asynchandler(async(req,res)=>{
     if(!order){
         throw new apierror(205,"something went wrong while creating the error")
     }
-    console.log(order)
     return res
     .status(200)
     .json(new apiresponse(200,order,"Order created successfully"))

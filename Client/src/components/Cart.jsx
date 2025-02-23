@@ -27,9 +27,7 @@ function Cart() {
             try {
                 if (userData?.address !== " ") 
                     {
-                        console.log("user has address")
                         setaddress(true)
-                    console.log("user address",address)
                 }
                 const response = await axios.post('http://localhost:8000/api/v1/users/userCart', {}, { withCredentials: true })
                 if (response) {
@@ -54,7 +52,6 @@ function Cart() {
 
 
     const handle_Order = () => {
-        console.log("logging in the order function ",address)
         if (address) {
             
             navigate('/order_page')
