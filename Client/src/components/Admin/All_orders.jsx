@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { ClipLoader } from 'react-spinners'
 function All_orders() {
   const [all_orders, setall_orders] = useState([])
   const [update, setupdate] = useState(0)
+  const[loading,setloading]=useState(true)
   useEffect(() => {
     const All_Orders = async () => {
       try {
@@ -10,6 +12,7 @@ function All_orders() {
         if (response) { 
           console.log(response.data.data)
           setall_orders(response.data.data)
+          setloading(false)
         }
       } catch (error) {
         console.log("something went wrong while getting all orders data", error)
@@ -19,11 +22,13 @@ function All_orders() {
   }, [update])
 
   const filter = async (status) => {
+    setloading(true)
+
     if (status == "delivered") {
       setall_orders((prev) => prev.filter((val) => val.isDelivered == true))
     }
     else if (status == "cancelled") {
-      setall_orders((prev) => prev.filter((val) => val.isCancelled = true))
+      setall_orders((prev) => prev.filter((val) => val.isCancelled == true))
 
     }
     else if (status == "pending") {
@@ -36,14 +41,17 @@ function All_orders() {
         setall_orders(response.data.data)
       }
     }
+    setloading(false)
 
   }
   const deliveryhandler = async (id, status_boolean) => {
+    setloading(true)
     if (status_boolean == true) {
       const response = await axios.post(`http://localhost:8000/api/v1/order/changeStatus/${id}`, {}, { withCredentials: true })
       if (response) {
         setall_orders((prev) => prev.filter((val) => val._id !== id))
         setupdate(update + 1)
+        setloading(false)
       }
     }
     else {
@@ -53,6 +61,13 @@ function All_orders() {
         setupdate(update + 1)
       }
     }
+  }
+  if(loading){
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+      <ClipLoader color="#2d3142" loading={loading} size={100} />
+       </div>
+    )
   }
 
 
@@ -99,7 +114,7 @@ function All_orders() {
               </div>
             </div>
           ))}
-        </div>) : (<div className='text-center md:mt-[10rem] md:text-5xl font-bold'>Cart is empty</div>)
+        </div>) : (<div className='text-center md:mt-[10rem] md:text-5xl font-bold'>No Orders</div>)
       }
     </div>
   )

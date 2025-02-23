@@ -1,9 +1,9 @@
 import { Product } from "../models/product.model.js";
+import { User } from "../models/user.model.js";
 import { apierror } from "../utils/apierror.js";
 import { apiresponse } from "../utils/apiresponse.js";
 import { asynchandler } from "../utils/asynchandler.js";
 import { cloudinaryUpload } from "../utils/cloudinary.js";
-import { ProductChart } from "../models/productChart.js";
 
 const productCreation = asynchandler(async (req, res) => {
     const { name, description, ram, storage, category, price, stock, brand, color } = req.body
@@ -122,21 +122,28 @@ const getPrdouct = asynchandler(async (req, res) => {
 })
 const addReview = asynchandler(async (req, res) => {
     const product_id = req.params.id
-    const { rating, comment } = req.body
+    console.log(req.body)
+    const { rating, review } = req.body
     const userid = req.user._id
-    if ([rating, comment].some(val => val == "")) {
+    if ([rating, review].some(val => val == "")) {
         throw new apierror(205, "Fields are missing to create a review")
     }
-    // const user=await User.findOne({_id:userid})
+    const user=await User.findOne({_id:userid})
+    const modified=user.reviews.filter((val)=>val.productId!==product_id)
+    user.reviews=modified
+    
+    
     const product = await Product.findOne({ _id: product_id })
-    const review = {
+    const Review = {
         userId: userid,
         rating,
-        comment
+        comment:review
     }
-    product.reviews.push(review)
-
+    product.reviews.push(Review)
+    console.log(product)
     await product.save({ validateBeforeSave: false })
+    await user.save({ validateBeforeSave: false })
+    
     return res
         .status(200)
         .json(new apiresponse(200, product, "review added successfully"))

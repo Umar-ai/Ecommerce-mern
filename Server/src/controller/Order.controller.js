@@ -52,8 +52,14 @@ const change_status=asynchandler(async(req,res)=>{
     order.isDelivered=true
     await order.save({validateBeforeSave:false})
     const user=await User.findOne({_id:order.customer_id})
-    user.reviews.push(order.product_id)
+    // user.reviews.push(order.product_id)
+    console.log(order.product_id)
+    const revie_w={
+        productId:order.product_id,
+    }
+    user.reviews.push(revie_w)
     await user.save({validateBeforeSave:false})
+    console.log(order)
     console.log(user)
     return res
     .status(200)

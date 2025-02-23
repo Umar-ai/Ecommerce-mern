@@ -45,10 +45,8 @@ const userSchema = new Schema({
     reviews: [
         {
             productId: String,
-            rating: Number,
-            comment: String,
-            date: Date
-        }
+        }   
+        
     ]
 
 }, { timestamps: true })

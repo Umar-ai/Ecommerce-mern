@@ -22,15 +22,17 @@ export const authSlice=createSlice({
             state.status=false,
             state.userData=null,
             state.isAdmin=false
-
         },
         checkAdmin:(state)=>{
             state.isAdmin=true
+        },
+        change_reviewStatus:(state,action)=>{
+        state.userData.reviews=state.userData.reviews.filter((val)=>val.productId!==action.payload)
         }
         
     }
 })
 
-export const {login,logout,ProductMang,checkAdmin}=authSlice.actions
+export const {login,logout,ProductMang,checkAdmin,change_reviewStatus}=authSlice.actions
 
 export default authSlice.reducer

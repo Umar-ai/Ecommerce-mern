@@ -3,7 +3,6 @@ import { apierror } from "../utils/apierror.js";
 import { apiresponse } from "../utils/apiresponse.js";
 import { asynchandler } from "../utils/asynchandler.js";
 import { cloudinaryUpload } from "../utils/cloudinary.js";
-import { Design } from "../models/structure.model.js";
 
 const tokenGenerator = async (id) => {
     const user = await User.findById(id)

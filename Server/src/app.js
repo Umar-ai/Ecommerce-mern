@@ -28,14 +28,6 @@ app.use('/api/v1/users',userRouter)
 import {router as productRouter} from './routes/product.route.js'
 app.use('/api/v1/products',productRouter)
 
-// !design routes
-import {router as designRouter} from './routes/design.route.js'
-app.use('/api/v1/design',designRouter)
-
-//! product chart 
-
-import {router as product_chartRouter} from './routes/productChart.route.js'
-app.use('/api/v1/productchart',product_chartRouter)
 
 // !Cart
 import {router as cartRouter} from './routes/cart.router.js'
