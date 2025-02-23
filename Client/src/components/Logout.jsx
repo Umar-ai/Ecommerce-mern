@@ -8,7 +8,6 @@ function Logout() {
 
     const handleLogout=async()=>{
         try {
-          alert("good")
             const response=await axios.post('http://localhost:8000/api/v1/users/logout',{},{withCredentials:true})
             if(response){
               dispatch(logout())
