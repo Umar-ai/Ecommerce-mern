@@ -71,10 +71,7 @@ const router = createBrowserRouter([
         ),
         path: '/order_page'
       },
-      {
-        element: <All_orders />,
-        path: '/all_order'
-      },
+      
       {
         element: (
           <LazyLoadWrapper>

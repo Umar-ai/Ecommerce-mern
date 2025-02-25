@@ -40,19 +40,8 @@ const register = asynchandler(async (req, res) => {
         throw new apierror(400, "Cloudinary response not found")
     }
 
-    let date = new Date()
-    const month = date.getMonth()
-    const desginFound = await Design.findOne({ month })
-    if (desginFound) {
-        desginFound.Count = desginFound.Count + 1
-        await desginFound.save({ validateBeforeSave: false })
-    }
-    else {
-        const design = await Design.create({
-            month,
-            Count: 1
-        })
-    }
+    // let date = new Date()
+    // const month = date.getMonth()
     const user = await User.create({
         username,
         email,
@@ -60,12 +49,12 @@ const register = asynchandler(async (req, res) => {
         avatar: avatarUpload.url
     }
     )
-    console.log(user)
     if (!user) {
         throw new apierror(400, "User creation failed")
     }
     return res
-        .json(new apiresponse(200, user, "Signup Successfully"))
+    .status(200)
+    .json(new apiresponse(200, user, "Signup Successfully"))
 
 })
 const login = asynchandler(async (req, res) => {

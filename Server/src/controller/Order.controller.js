@@ -52,15 +52,11 @@ const change_status=asynchandler(async(req,res)=>{
     order.isDelivered=true
     await order.save({validateBeforeSave:false})
     const user=await User.findOne({_id:order.customer_id})
-    // user.reviews.push(order.product_id)
-    console.log(order.product_id)
     const revie_w={
         productId:order.product_id,
     }
     user.reviews.push(revie_w)
     await user.save({validateBeforeSave:false})
-    console.log(order)
-    console.log(user)
     return res
     .status(200)
     .json(new apiresponse(200,order,"order delivery status converted"))
@@ -77,5 +73,17 @@ const cancel_Order=asynchandler(async(req,res)=>{
     .status(200)
     .json(new apiresponse(200,order,"order cancelled status converted"))
 })
+const delte_oneOrder=asynchandler(async(req,res)=>{
+    const id=req.params.id
+    const order=await Order.deleteOne({_id:id})
+    if(!order){
+    throw new apierror(205,"order not found with this id")
+    }
 
-export {create_Order,all_Orders,delete_allorder,change_status,cancel_Order}
+    return res
+    .status(200)
+    .json(new apiresponse(200,{},"Order delted successfully"))
+
+})
+
+export {create_Order,all_Orders,delete_allorder,change_status,cancel_Order,delte_oneOrder}

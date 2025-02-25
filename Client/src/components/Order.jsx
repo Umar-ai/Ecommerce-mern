@@ -55,7 +55,6 @@ function Order() {
         order_success()
         console.log("order orderItems",order_details)
       }, 1000);
-    
   }
   async function order_success(){
     try {

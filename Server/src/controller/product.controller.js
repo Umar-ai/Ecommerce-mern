@@ -114,10 +114,14 @@ const productDeleteAll = asynchandler(async (req, res) => {
 })
 const getPrdouct = asynchandler(async (req, res) => {
     const { id } = req.params
-    const response = await Product.findOne({ _id: id })
+    const product = await Product.findOne({ _id: id }).populate({
+        path:'reviews.userId'
+    })
+
+
     return res
         .status(200)
-        .json(new apiresponse(200, response, "Product details found"))
+        .json(new apiresponse(200, product, "Product details found"))
 
 })
 const addReview = asynchandler(async (req, res) => {
@@ -140,7 +144,6 @@ const addReview = asynchandler(async (req, res) => {
         comment:review
     }
     product.reviews.push(Review)
-    console.log(product)
     await product.save({ validateBeforeSave: false })
     await user.save({ validateBeforeSave: false })
     

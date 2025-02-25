@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import login from '../ReduxToolkit/authSlice'
+import {login} from '../ReduxToolkit/authSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 function Signup() {
@@ -11,7 +11,6 @@ function Signup() {
 
 
     const signuphandler = async (data) => {
-        console.log(data)
         const userCredentials = new FormData()
         userCredentials.append('username', data.username)
         userCredentials.append('email', data.email)
@@ -22,13 +21,12 @@ function Signup() {
                 "Content-Type": 'multipart/form-data'
             }, withCredentials: true
         })
-        dispatch(login(response.data.data))
-        if (response.data.data.isAdmin == true) {
-            navigate('/all_order')
-            dispatch(checkAdmin())
+        if(response){
+            dispatch(login(response.data.data))
+            console.log(response.data.data)
+            navigate('/')
+
         }
-        console.log(response.data.data)
-        navigate('/')
     }
 
 

@@ -84,8 +84,8 @@ function All_orders() {
         all_orders.length >= 1 ? (<div>
           {all_orders?.map((val) => (
             <div className='flex gap-4 rounded-md border-2 border-b-2 border-black border-t-0 border-r-0 border-l-0  mt-2 h-[5rem]  bg-Primary' key={val._id}>
-              <div className='flex gap-[42rem] '>
-                <div className='flex'>
+              <div className='flex gap-[42rem]  '>
+                <div className='flex '>
                   <img className='h-[12vh]  2xl:h-[11vh] md:h-[12vh] ml-16 ' src={val.product_id.images[0]} alt="" />
                   <div className='md:flex flex-col md:flex-grow '>
                     <p className='text-md md:mt-5 flex-shrink-0 md:flex-grow md:text-xl text-black '>{val.product_id.name}</p>
@@ -100,7 +100,7 @@ function All_orders() {
                   </div>
                 </div>
                 {val.isCancelled == true ? (<button className='bg-red-500 text-Primary ml-[8rem] mt-8 h-[2rem] px-4'>Cancelled</button>) : (
-                  <div> {val.isDelivered == true ? (<button onClick={() => deliveryhandler(val._id, true)} className='bg-green-500 text-Primary mt-8 ml-[8rem]  px-4 h-[2rem]'>Delivered</button>) : (<div className='flex gap-10'>
+                  <div className=''> {val.isDelivered == true ? (<button onClick={() => deliveryhandler(val._id, true)} className='bg-green-500 text-Primary mt-8 ml-[8rem]  px-4 h-[2rem]'>Delivered</button>) : (<div className='flex gap-10'>
                     <button onClick={() => deliveryhandler(val._id, true)} className='bg-accent text-Primary mt-8  px-4 h-[2rem]'>Delivered</button>
                     <button onClick={() => deliveryhandler(val._id, false)} className='bg-accent text-Primary mt-8 h-[2rem] px-4'>Cancelled</button>
                   </div>)}</div>

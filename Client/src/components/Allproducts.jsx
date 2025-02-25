@@ -11,7 +11,8 @@ function Allproducts() {
 
   const dispatch = useDispatch()
   const prodcutsData = useSelector((state) => state.product?.productsData)
-  const[loader,setloader]=useState(false)
+  const status = useSelector((state) => state.auth.status)
+  const [loader, setloader] = useState(false)
   const [showmessage, setshowmessage] = useState(false)
   const navigate = useNavigate()
 
@@ -20,16 +21,20 @@ function Allproducts() {
     navigate(`/detail/${id}`)
   }
 
-  const cartHandler = async(product) => {
+  const cartHandler = async (product) => {
     try {
-      console.log("id in the all product",product._id)
-      const response=await axios.post(`http://localhost:8000/api/v1/cart/addtocart/${product._id}`,{},{withCredentials:true})
+      if (!status) {
+        navigate('/login')
+        return 
+      }
+      await axios.post(`http://localhost:8000/api/v1/cart/addtocart/${product._id}`, {}, { withCredentials: true })
+      
       setshowmessage(true)
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         setshowmessage(false)
       }, 500);
     } catch (error) {
-      console.log("Something went wrong while adding product to user cart",error)
+      console.log("Something went wrong while adding product to user cart", error)
     }
   }
 
@@ -50,14 +55,14 @@ function Allproducts() {
     }
     all_product()
   }, [])
-  if(loader){
-    return(
+  if (loader) {
+    return (
 
-     <div className="flex  justify-center items-center relative left-[350%] min-h-screen">
-         <ClipLoader color="#2d3142" loading={loader} size={100} />
-          </div>
-      )
-    
+      <div className="flex  justify-center items-center relative left-[350%] min-h-screen">
+        <ClipLoader color="#2d3142" loading={loader} size={100} />
+      </div>
+    )
+
   }
   return (
     <>
@@ -75,8 +80,8 @@ function Allproducts() {
             <img onClick={() => product_overView(product._id)} className=' mt-6 ml-4 w-[12rem]' src={product.images[0]} />
             <p onClick={() => product_overView(product._id)} className='mt-2 ml-4 text-xl font-semibold '>{product.name}</p>
             <div className='flex gap-2'>
-            <p onClick={() => product_overView(product._id)} className='mt-2 ml-4 text-xl font-semibold  '>☆☆☆☆☆</p>
-            <p className='bg-accent md:text-md h-7 mt-2 pt-1 text-Primary rounded-md  px-1'>-10%</p>
+              <p onClick={() => product_overView(product._id)} className='mt-2 ml-4 text-xl font-semibold  '>☆☆☆☆☆</p>
+              <p className='bg-accent md:text-md h-7 mt-2 pt-1 text-Primary rounded-md  px-1'>-10%</p>
             </div>
             <div className='flex justify-center mt-[2rem] items-center gap-[4rem] '>
               <div>

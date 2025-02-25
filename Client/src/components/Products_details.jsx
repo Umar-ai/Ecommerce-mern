@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { change_reviewStatus } from '../ReduxToolkit/authSlice'
 
 function Products_details() {
-  const [details, setdetails] = useState({})
+  const [details, setdetails] = useState([])
   const [Images, setimages] = useState([])
   const [loading, setloading] = useState(true)
   const [mainimage, setmainimages] = useState("")
@@ -19,24 +20,37 @@ function Products_details() {
   const [starfive, setstarfive] = useState("☆")
   const [review, setreview] = useState("")
   const [allowed, setisAllowed] = useState(false)
+  const [user_reviews, setuser_reviews] = useState([])
+  const [showmessage, setshowmessage] = useState(false)
+  const [showmessage2, setshowmessage2] = useState(false)
+  const [show_rating, setshow_rating] = useState(0)
+  const[address,setaddress]=useState(false)
 
   const allow_toReview = useSelector((state) => state.auth?.userData?.reviews)//user review array
+  const auth_status=useSelector((state)=>state.auth.status)
   const { id } = useParams()
+  const userData = useSelector((state) => state.auth.userData)
   const dispatch = useDispatch()
-
+const navigate=useNavigate()
 
   useEffect(() => {
     const getproduct_data = async () => {
       try {
+        console.log(userData.address)
+        if (userData?.address !== undefined) 
+          {
+              setaddress(true)
+      }
         const response = await axios.post(`http://localhost:8000/api/v1/products/productdetail/${id}`)
         setdetails(response.data.data)
+        console.log(response.data.data.reveiws)
+        setshow_rating(Math.ceil(response.data.data.rating / response.data.data.reviews.length))
         setimages(response.data.data.images)
         setmainimages(response.data.data.images[0])
+        setuser_reviews(response.data.data.reviews)
         setTimeout(() => {
           setloading(false)
         }, 500);
-
-
       } catch (error) {
         console.log("something went wrong while fetching product data")
       }
@@ -47,6 +61,38 @@ function Products_details() {
   const image1 = Images[0]
   const image2 = Images[1]
   const image3 = Images[2]
+  const cartHandler = async (status) => {
+    try {
+      
+      if (!auth_status) {
+        navigate('/login')
+        return 
+      }
+      console.log("id in the all product", details._id)
+      const response=await axios.post(`http://localhost:8000/api/v1/cart/addtocart/${details._id}`, {}, { withCredentials: true })
+    if(status&&response){
+        setshowmessage2(true)
+      setTimeout(() => {
+        setshowmessage2(false)
+      }, 500);
+    }
+    else{
+      handle_Order()
+    }
+    } catch (error) {
+      console.log("Something went wrong while adding product to user cart", error)
+    }
+  }
+  const handle_Order = () => {
+    console.log(address)
+    if (address) {
+
+        navigate('/order_page')
+    }
+    else {
+        navigate('/address_form')
+    }
+}
   const changeMain_image = (image) => {
     setmainimages(image)
   }
@@ -60,6 +106,7 @@ function Products_details() {
   }
   const reviewHandler = async () => {
     try {
+      setshowmessage(true)
       const data = {
         rating,
         review
@@ -69,6 +116,9 @@ function Products_details() {
         dispatch(change_reviewStatus(id))
         setisAllowed(false)
       }
+      setTimeout(() => {
+        setshowmessage(false)
+      }, 500);
     } catch (error) {
       console.log("something went wrong while doing the review", error)
     }
@@ -139,6 +189,18 @@ function Products_details() {
 
   return (
     <>
+      <div>
+        {showmessage && (
+          <div className=' md:ml-4  md:h-10 rounded-md pt-1 mt-2 bg-accent text-Primary text-center text-2xl font-semibold'>
+            Review Added Successfully
+          </div>
+        )}
+        {showmessage2&& (
+          <div className=' md:ml-4  md:h-10 rounded-md pt-1 mt-2 bg-accent text-Primary text-center text-2xl font-semibold'>
+            Product Added Successfully
+          </div>
+        )}
+      </div>
       <div className='flex ml-10 justify-center overflow-x-hidden flex-col items-start gap-10'>
         <div className='md:flex gap-10'>
           <div className='flex 2xl:flex-row md:flex-col'>
@@ -161,6 +223,11 @@ function Products_details() {
             <div className='flex items-center gap-36'>
               <div className='flex flex-col gap-3'>
                 <p className='text-xl'>North-Store Price</p>
+                <div>
+                  <p className='font-bold text-3xl'>
+                    {show_rating == 1 ? "★☆☆☆☆" : (show_rating == 2 ? "★★☆☆☆" : (show_rating == 3 ? "★★★☆☆" : (show_rating == 4 ? "★★★★☆" : "★★★★★")))}
+                  </p>
+                </div>
                 <p className='text-2xl font-bold'><sup>$</sup> {details.price}</p>
                 <p className='line-through font-extralight'><sup>Rs</sup> {details.price + 100}</p>
               </div>
@@ -182,8 +249,8 @@ function Products_details() {
               <p className='font-semibold'>1 Year Brand(free)+ 1 year North-store...</p>
             </div>
             <div className='flex justify-center items-center gap-10'>
-              <button className='bg-accent text-Primary py-2 px-5 rounded-md'>Add to Cart</button>
-              <button className=' text-accent border-2 border-accent py-2 px-5 rounded-md'>Check Out</button>
+              <button onClick={()=>cartHandler(true)}  className='bg-accent text-Primary py-2 px-5 rounded-md'>Add to Cart</button>
+              <button onClick={()=>cartHandler(false)} className=' text-accent border-2 border-accent py-2 px-5 rounded-md'>Check Out</button>
             </div>
           </div>
         </div>
@@ -208,7 +275,30 @@ function Products_details() {
           </div>
         )}
       </div>
-      <div>review</div>
+      <div>
+        {user_reviews.length >= 1 && (
+          <div className='ml-4 max-h-max '>
+            <h1 className='font-bold text-center text-4xl'>Reviews</h1>
+            {user_reviews.map((val,index) => (
+              <div className='flex flex-col gap-2 bg-[#FAF0E6] w-[40vw] p-3 rounded-lg mt-4 ' key={index}>
+                <div className='flex gap-2'>
+                  <img className='h-10 w-10 rounded-full' src={val.userId?.avatar} alt="" />
+                  <div>
+                  <p className=' text-xl font-semibold'>{val.userId?.username}</p>
+                  <p className='font-bold text-xl'>
+                    {val.rating == 1 ? "★☆☆☆☆" : (val.rating == 2 ? "★★☆☆☆" : (val.rating == 3 ? "★★★☆☆" : (val.rating == 4 ? "★★★★☆" : "★★★★★")))}
+                  </p>
+                  </div>
+                </div>
+                <div>
+              
+                <div>{val.comment}</div>
+                </div>
+              </div>
+            ))}
+          </div>)}
+
+      </div>
     </>
   )
 }

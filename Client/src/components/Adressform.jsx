@@ -9,11 +9,8 @@ const navigate=useNavigate()
     const Addresshandler = async (data) => {
         const response=await axios.post(`http://localhost:8000/api/v1/users/add_address`,{},{withCredentials:true})
         if(response){
-            alert("address added successfully")
             navigate('/order_page')
         }
-       console.log("button clicked")
-       console.log(data)
     }
     const majorCitiesPakistan = [
       "Karachi", 
