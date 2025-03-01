@@ -17,6 +17,7 @@ function Allproducts() {
   const navigate = useNavigate()
 
   const product_overView = (id) => {
+    
     console.log(id)
     navigate(`/detail/${id}`)
   }

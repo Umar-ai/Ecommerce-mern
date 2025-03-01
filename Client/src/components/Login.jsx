@@ -33,10 +33,10 @@ function Login() {
     return (
         <>
             <div className=' bg-Primary max-h-max'>
-                <form onSubmit={handleSubmit(loginHandler)} className='bg-secondary  mt-[7rem]  2xl:mt-[7rem] sm-w-[40vw]  lg:mt-[2rem] rounded-md lg:h-[90vh] 2xl:h-[70vh] lg:w-[35vw]   h-[70vh] 2xl:w-[30vw] w-[70vw] mx-auto flex flex-col items-center  '>
+                <form onSubmit={handleSubmit(loginHandler)} className='bg-[#F5F5F5]  mt-[7rem]  2xl:mt-[7rem] sm-w-[40vw]  lg:mt-[2rem] rounded-md lg:h-[90vh] 2xl:h-[70vh] lg:w-[35vw]   h-[70vh] 2xl:w-[30vw] w-[70vw] mx-auto flex flex-col items-center  '>
 
                     <div className='pt-8'>
-                        <h1 className='text-Primary  font-bold md:text-3xl text-4xl'>Login</h1>
+                        <h1 className='text-black  font-bold md:text-3xl text-4xl'>Login</h1>
                     </div>
 
 
@@ -44,7 +44,7 @@ function Login() {
 
                     <div className='pt-20 md:pt-16 2xl:pt-20 '>
                         <input
-                            className='h-14 w-[24rem] text-xl  2xl:w-[30rem] pl-5 rounded-md'
+                            className='h-14 w-[24rem] text-xl text-black border-2 border-black  2xl:w-[30rem] pl-5 rounded-md'
                             type="email"
                             name="email"
                             placeholder='Email'
@@ -54,7 +54,7 @@ function Login() {
 
                     <div className='pt-16 md:pt-16 2xl:pt-20 '>
                         <input
-                            className='h-14 2xl:w-[30rem] text-xl w-[24rem] pl-5 rounded-md'
+                            className='h-14 2xl:w-[30rem] border-2 border-black text-xl w-[24rem] pl-5 rounded-md'
                             type="password"
                             name="password"
                             placeholder='Password'
@@ -68,7 +68,7 @@ function Login() {
                     </div>
 
                     <div className='pt-6 text-md font-bold  text-Primary'>
-                        <p>No Account?Singup</p>
+                        <p className='text-black'>No Account?Singup</p>
                     </div>
                 </form>
             </div>

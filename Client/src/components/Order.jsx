@@ -8,7 +8,7 @@ function Order() {
   const [loading, setloading] = useState(true)
   const [total_price, settotal_price] = useState(0)
   const [total_quantity, settotal_quantity] = useState(0)
-  const [show, setshow] = useState(false)
+  // const [show, setshow] = useState(false)
   const navigate=useNavigate()
   const [payment_Method, setpayment_Method] = useState("cod")
   const data = true
@@ -38,7 +38,6 @@ function Order() {
   const handle_Order_Confirm =() => {
     
     let order_details
-    let response
     setloading(true)
     orderItems.map(async(val) => (
       order_details={
@@ -49,22 +48,16 @@ function Order() {
       },
        await axios.post('http://localhost:8000/api/v1/order/create_order',order_details,{withCredentials:true})
       ))
-      setshow(true)
       setTimeout(() => {
-        setloading(false)
         order_success()
-        console.log("order orderItems",order_details)
-      }, 1000);
+      }, 500);
   }
   async function order_success(){
     try {
-      // alert("function called delete cart")
-      setshow(true)
       await axios.post('http://localhost:8000/api/v1/cart/deletecart',{},{withCredentials:true})
-      setTimeout(() => {
-        setshow(false) 
-        navigate('/cart')
-      }, 700);
+      setloading(false)
+        navigate('/order_success')
+     
     } catch (error) {
       console.log("something went wrong in the order_success function",error)
     }
@@ -83,9 +76,9 @@ function Order() {
 
         <div className='w-[90vw] mx-auto '>
           <div className='flex justify-between items-center'>
-            {show&&(<div className='text-3xl font-bold w-[90vw] text-Primary text-center h-[8vh] bg-green-500 mb-[8rem]'>
+            {/* {show&&(<div className='text-3xl font-bold w-[90vw] text-Primary text-center h-[8vh] bg-green-500 mb-[8rem]'>
                   Order Successfull
-            </div>)}
+            </div>)} */}
           </div>
             <h1 className='text-4xl ml-2 font-bold '>Order--Summary</h1>
           <div>
@@ -133,7 +126,7 @@ function Order() {
                   <p className='font-semibold'>{total_price}<sup>$</sup></p>
                 </div>
                 <div>
-                  <button onClick={handle_Order_Confirm} className='py-1 mt-5 px-4 bg-black text-Primary ml-[20rem]'>Confirm</button>
+                  <button onClick={handle_Order_Confirm} className='py-1 mt-5  px-6 bg-black text-Primary ml-[24.5rem]'>Confirm</button>
                 </div >
 
               </div>

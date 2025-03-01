@@ -27,10 +27,13 @@ function Search() {
             if (event.key == 'Enter') {
                 console.log("umer")
                 console.log("button clicked")
-                const response = await axios.post(`http://localhost:8000/api/v1/products/allproducts?name=${search}`)
-                console.log(response)
-                dispatch(ProductMang(response.data.data))
-                setsearch("")
+                navigate('/')
+                setTimeout(async() => {
+                    const response = await axios.post(`http://localhost:8000/api/v1/products/allproducts?name=${search}`)
+                    console.log(response)
+                    dispatch(ProductMang(response.data.data))
+                    setsearch("")
+                }, 500);
             }
         } catch (error) {
             console.log("something went wrong while fetching data on the search button clicked", error)

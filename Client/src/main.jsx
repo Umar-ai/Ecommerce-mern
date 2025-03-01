@@ -7,6 +7,7 @@ import { store } from './ReduxToolkit/Store.js'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LazyLoadWrapper from './components/Lazyloading.jsx'
 import Productform_Page from './Pages/productform_Page.jsx'
+import OrderSuccesspage from './Pages/OrderSuccesspage.jsx'
 
 const Home = lazy(() => import('./Pages/Producwithfilter.jsx'))
 const Details = lazy(() => import('./Pages/ProductDetails.jsx'))
@@ -16,6 +17,7 @@ const Signup_page = lazy(() => import('./components/Signup.jsx'))
 const Address_form = lazy(() => import('./Pages/Adressform_page.jsx'))
 const Order_page = lazy(() => import('./Pages/Order_page.jsx'))
 const All_orders = lazy(() => import('./components/Admin/All_orders.jsx'))
+const OrderrSuccess_Page=lazy(()=>import('./Pages/OrderSuccesspage.jsx'))
 
 const router = createBrowserRouter([
   {
@@ -71,7 +73,6 @@ const router = createBrowserRouter([
         ),
         path: '/order_page'
       },
-      
       {
         element: (
           <LazyLoadWrapper>
@@ -79,6 +80,14 @@ const router = createBrowserRouter([
           </LazyLoadWrapper>
         ),
         path: '/address_form'
+      },
+      {
+        element: (
+        <LazyLoadWrapper>
+          <OrderrSuccess_Page/>
+        </LazyLoadWrapper>
+        ) ,    
+        path: '/order_success'
       },
       //!admin 
       {

@@ -33,16 +33,16 @@ function Signup() {
     return (
         <>
             <div onSubmit={handleSubmit(signuphandler)} className=' bg-Primary max-h-max'>
-                <form className='bg-secondary  mt-[7rem]  2xl:mt-[7rem] sm-w-[40vw]  lg:mt-[2rem] rounded-md lg:h-[90vh] 2xl:h-[70vh] lg:w-[35vw]   h-[70vh] 2xl:w-[30vw] w-[70vw] mx-auto flex flex-col items-center  '>
+                <form className='bg-[#F5F5F5] mt-[7rem]  2xl:mt-[7rem] sm-w-[40vw]  lg:mt-[2rem] rounded-md lg:h-[90vh] 2xl:h-[70vh] lg:w-[35vw]   h-[70vh] 2xl:w-[30vw] w-[70vw] mx-auto flex flex-col items-center  '>
 
                     <div className='pt-4'>
-                        <h1 className='text-Primary  font-bold md:text-3xl text-4xl'>Sign Up</h1>
+                        <h1 className='text-black  font-bold md:text-3xl text-4xl'>Sign Up</h1>
                     </div>
 
 
                     <div className='pt-20 md:pt-8 2xl:pt-20  '>
                         <input
-                            className='h-10 pl-5 w-[22rem] rounded-md text-secondary '
+                            className='h-10 pl-5 w-[22rem] border-2 border-black rounded-md text-black '
                             type="text"
                             name="username"
                             placeholder='Username'
@@ -53,7 +53,7 @@ function Signup() {
 
                     <div className='pt-12 md:pt-6 2xl:pt-12 '>
                         <input
-                            className='h-10 w-[22rem] pl-5 rounded-md'
+                            className='h-10 w-[22rem] pl-5 rounded-md border-2 border-black  text-black '
                             type="email"
                             name="email"
                             placeholder='Email'
@@ -63,7 +63,7 @@ function Signup() {
 
                     <div className='pt-12 md:pt-6 2xl:pt-12 '>
                         <input
-                            className='h-10 w-[22rem] pl-5 rounded-md'
+                            className='h-10 w-[22rem] pl-5 rounded-md border-2 border-black  text-black '
                             type="password"
                             name="password"
                             placeholder='Password'
@@ -71,7 +71,7 @@ function Signup() {
                         />
                     </div>
                     <div className='pt-12 md:pt-6 2xl:pt-12'>
-                        <input {...register('avatar', { required: true })} type="file" className='border-2 rounded-lg border-white placeholder-gray-100 bg-secondary text-Primary pl-10 py-2 px-7 w-[22rem] ' />
+                        <input {...register('avatar', { required: true })} type="file" className='border-2 rounded-lg border-black placeholder-gray-100  text-black pl-10 py-2 px-7 w-[22rem] ' />
 
                     </div>
 
