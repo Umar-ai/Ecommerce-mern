@@ -93,7 +93,7 @@ function Search() {
                             <div onClick={()=>show_details(val._id)} className=' flex   pt-3 bg-[#FAFAFA]' key={val._id}>
 
                                 <div className='flex gap-2 flex-grow'>
-                                    <img className='w-10 h-10' src={val.images[0]} alt="" />
+                                    <img className='w-10 h-10' src={val.images[0]} alt="searched results" />
 
                                     <div className='flex-col'>
                                         <p className='text-black'>{val.name}</p>

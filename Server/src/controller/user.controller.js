@@ -15,7 +15,6 @@ const tokenGenerator = async (id) => {
     await user.save({ validateBeforeSave: false })
     return { refreshToken, AccessToken }
 }
-
 const register = asynchandler(async (req, res) => {
 
     const { username, email, password } = req.body
@@ -56,6 +55,13 @@ const register = asynchandler(async (req, res) => {
     .status(200)
     .json(new apiresponse(200, user, "Signup Successfully"))
 
+})
+const getUser=asynchandler(async(req,res)=>{
+    if(!req.user){
+        throw new apierror(205,"User not found in the req")
+    }
+    return res
+    .json(new apiresponse(200,req.user,"User founded successfully"))
 })
 const login = asynchandler(async (req, res) => {
     const { email, password } = req.body
@@ -130,4 +136,4 @@ return res
 })
 
 
-export { register, login, logout,userCart,add_Useradress }
+export { register, login, logout,userCart,add_Useradress,getUser }

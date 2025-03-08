@@ -39,9 +39,6 @@ function Login() {
                         <h1 className='text-black  font-bold md:text-3xl text-4xl'>Login</h1>
                     </div>
 
-
-
-
                     <div className='pt-20 md:pt-16 2xl:pt-20 '>
                         <input
                             className='h-14 w-[24rem] text-xl text-black border-2 border-black  2xl:w-[30rem] pl-5 rounded-md'

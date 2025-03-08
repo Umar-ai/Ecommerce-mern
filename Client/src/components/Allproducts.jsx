@@ -78,7 +78,7 @@ function Allproducts() {
         {prodcutsData?.map((product) => (
 
           <div className='h-[26rem]  bg-Primary mt-4 w-[15rem] mr-9 rounded-md ml-5' key={product._id}>
-            <img onClick={() => product_overView(product._id)} className=' mt-6 ml-4 w-[12rem]' src={product.images[0]} />
+            <img onClick={() => product_overView(product._id)} alt='latest phone images' className=' mt-6 ml-4 w-[12rem]' src={product.images[0]} />
             <p onClick={() => product_overView(product._id)} className='mt-2 ml-4 text-xl font-semibold '>{product.name}</p>
             <div className='flex gap-2'>
               <p onClick={() => product_overView(product._id)} className='mt-2 ml-4 text-xl font-semibold  '>☆☆☆☆☆</p>

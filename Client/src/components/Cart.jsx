@@ -126,7 +126,7 @@ function Cart() {
                         cartitem.length >= 1 ? (<div>
                             {cartitem?.map((val) => (
                                 <div className='flex gap-4 rounded-md border-2 border-b-2 border-black border-t-0 border-r-0 border-l-0  mt-2 h-[8rem]  bg-Primary' key={val._id}>
-                                    <img className='h-[12vh]  2xl:h-[11vh] md:h-[20vh] ml-2 mt-2' src={val.productId.images[0]} alt="" />
+                                    <img className='h-[12vh]  2xl:h-[11vh] md:h-[20vh] ml-2 mt-2' src={val.productId.images[0]} alt="latest phone images" />
                                     <div className='md:flex md:flex-grow '>
                                         <p className='text-xl md:mt-5 flex-shrink-0 md:flex-grow md:text-3xl text-black '>{val.productId.name}</p>
                                         <div className='md:mr-4 md:mt-5  '>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ClipLoader } from 'react-spinners'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 function Order() {
 
   const [orderItems, setorderItems] = useState([])
@@ -9,7 +9,7 @@ function Order() {
   const [total_price, settotal_price] = useState(0)
   const [total_quantity, settotal_quantity] = useState(0)
   // const [show, setshow] = useState(false)
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [payment_Method, setpayment_Method] = useState("cod")
   const data = true
   useEffect(() => {
@@ -35,31 +35,31 @@ function Order() {
     getCartitem()
 
   }, [])
-  const handle_Order_Confirm =() => {
-    
+  const handle_Order_Confirm = () => {
+
     let order_details
     setloading(true)
-    orderItems.map(async(val) => (
-      order_details={
-        payment_method:payment_Method,
-        order_price:val.productId.price * val.quantity,
-        order_quantity:val.quantity,
-        product_id:val.productId._id
+    orderItems.map(async (val) => (
+      order_details = {
+        payment_method: payment_Method,
+        order_price: val.productId.price * val.quantity,
+        order_quantity: val.quantity,
+        product_id: val.productId._id
       },
-       await axios.post('http://localhost:8000/api/v1/order/create_order',order_details,{withCredentials:true})
-      ))
-      setTimeout(() => {
-        order_success()
-      }, 500);
+      await axios.post('http://localhost:8000/api/v1/order/create_order', order_details, { withCredentials: true })
+    ))
+    setTimeout(() => {
+      order_success()
+    }, 500);
   }
-  async function order_success(){
+  async function order_success() {
     try {
-      await axios.post('http://localhost:8000/api/v1/cart/deletecart',{},{withCredentials:true})
+      await axios.post('http://localhost:8000/api/v1/cart/deletecart', {}, { withCredentials: true })
       setloading(false)
-        navigate('/order_success')
-     
+      navigate('/order_success')
+
     } catch (error) {
-      console.log("something went wrong in the order_success function",error)
+      console.log("something went wrong in the order_success function", error)
     }
   }
 
@@ -80,11 +80,11 @@ function Order() {
                   Order Successfull
             </div>)} */}
           </div>
-            <h1 className='text-4xl ml-2 font-bold '>Order--Summary</h1>
+          <h1 className='text-4xl ml-2 font-bold '>Order--Summary</h1>
           <div>
             {orderItems?.map((val) => (
               <div className='flex gap-4 rounded-md border-2 border-b-2 border-black border-t-0 border-r-0 border-l-0  mt-2 h-[4rem]  bg-Primary' key={val._id}>
-                <img className='h-[12vh]  2xl:h-[11vh] md:h-[8vh] ml-2 mt-2' src={val.productId.images[0]} alt="" />
+                <img className='h-[12vh]  2xl:h-[11vh] md:h-[8vh] ml-2 mt-2' src={val.productId.images[0]} alt="latest phone images" />
                 <div className='md:flex md:flex-grow '>
                   <p className='text-xl md:mt-5 flex-shrink-0 md:flex-grow md:text-xl text-black '>{val.productId.name}</p>
                   <div className='md:mr-4 md:mt-2  '>
@@ -93,7 +93,7 @@ function Order() {
                       <p className='font-bold md:text-xl text-black  text-lg'>{val.productId.price * val.quantity}<sup>$</sup></p>
                       <p className='text-black font-semibold text-sm  md:ml-5'>Quantity:{val.quantity}</p>
                     </div>
-                   
+
                   </div>
                 </div>
               </div>

@@ -8,7 +8,6 @@ dotenv.config({
 })
 const app=express()
 
-
 app.use(cookieparser())
 app.use(cors({
     origin:process.env.CORS_ORIGIN,
